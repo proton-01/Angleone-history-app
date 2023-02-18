@@ -3,14 +3,12 @@ import "./main.css";
 import Axios from "axios";
 
 
+
 export default function Login() {
 
     const [clientcode, setClientcode] = useState("");
     const [password, setPassword] = useState("");
     const [totp, setTotp] = useState("");
-
-
-    const [record, setRecord] = useState([]);
    
 
     const handleSubmit = (e) => {
@@ -21,7 +19,7 @@ export default function Login() {
             "password": password,
             "totp": totp,
         });
-        console.log('dada is ' , data);
+        console.log('data is ' , data);
 
         var config = {
             method: 'post',
@@ -42,10 +40,13 @@ export default function Login() {
 
         Axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data));
+                
+                let resObj =JSON.stringify(response.data);
+                let dataObj = JSON.parse(resObj).data;
+                console.log(dataObj.jwtToken);
                 window.location.href = '/main';
-                console.log(response);
-              
+                localStorage.setItem('jwt',dataObj.jwtToken);
+                
             })
             .catch(function (error) {
                 console.log(error);

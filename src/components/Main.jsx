@@ -32,6 +32,7 @@ export default function Main() {
             "interval": "ONE_MINUTE", "fromdate": "2021-02-08 09:00",
             "todate": "2021-02-08 09:16"
         });
+        var jwt = localStorage.getItem('jwt');
 
 
         var config = {
@@ -45,7 +46,7 @@ export default function Main() {
                 'X-ClientPublicIP': 'CLIENT_PUBLIC_IP',
                 'X-MACAddress': 'MAC_ADDRESS',
                 'X-UserType': 'USER',
-                'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6Iko1MDMyNDkxMCIsInJvbGVzIjowLCJ1c2VydHlwZSI6IlVTRVIiLCJpYXQiOjE2NzY3MDE5NDcsImV4cCI6MTc2MzEwMTk0N30.riqqIKkBprOmaQ5lqp4QcPDjXFpMoZugLewesDevH7pkDfLj3HMwQMAbDsg0MhvMU6swRzKjNSQINUDfEvtrLg'
+                'Authorization': `Bearer ${jwt}`,
             },
             data: data
         };
@@ -53,6 +54,7 @@ export default function Main() {
         Axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+                // response.json("hh");
             })
             .catch(function (error) {
                 console.log(error);
