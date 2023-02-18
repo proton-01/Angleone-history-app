@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import "./main.css";
 import Axios from "axios";
 
+
 export default function Login() {
 
     const [clientcode, setClientcode] = useState("");
@@ -10,6 +11,7 @@ export default function Login() {
 
 
     const [record, setRecord] = useState([]);
+   
 
     const handleSubmit = (e) => {
         console.log(clientcode, password, totp);
@@ -41,7 +43,9 @@ export default function Login() {
         Axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
-                response.redirect('/main');
+                window.location.href = '/main';
+                console.log(response);
+              
             })
             .catch(function (error) {
                 console.log(error);
