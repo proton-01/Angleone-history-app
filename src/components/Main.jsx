@@ -27,10 +27,19 @@ export default function Main() {
         setRecord([...record, newRecord]);
         setState({ exchange: "", symboltoken: "", interval: "", fromdate: "", todate: "", });
 
+
         var data = JSON.stringify({
-            "exchange": "NSE", "symboltoken": "3045",
-            "interval": "ONE_MINUTE", "fromdate": "2021-02-08 09:00",
-            "todate": "2021-02-08 09:16"
+            // "exchange": "NSE",
+            // "symboltoken": "3045",
+            // "interval": "ONE_MINUTE",
+            // "fromdate": "2021-02-08 09:00",
+            // "todate": "2021-02-08 09:16",
+
+            "exchange": state.exchange, 
+            "symboltoken": state.symboltoken,
+            "interval": state.interval, 
+            "fromdate": state.fromdate,
+            "todate": state.todate,
         });
         var jwt = localStorage.getItem('jwt');
 
@@ -46,15 +55,20 @@ export default function Main() {
                 'X-ClientPublicIP': 'CLIENT_PUBLIC_IP',
                 'X-MACAddress': 'MAC_ADDRESS',
                 'X-UserType': 'USER',
-                'Authorization': `Bearer ${jwt}`,
+                'Authorization': `Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6Iko1MDMyNDkxMCIsInJvbGVzIjowLCJ1c2VydHlwZSI6IlVTRVIiLCJpYXQiOjE2NzY4MjUzNjMsImV4cCI6MTc2MzIyNTM2M30.GgAapx8stVQ1mGZWiEJ90_zRlcSzwBE9HMOwlOsCL9ZBAzmdnqIHgBjvan00spl6B8k97uehIjteea2glR8HJQ`,
+                'Content-Type': 'application/json'
             },
             data: data
         };
 
         Axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                // response.json("hh");
+               let resObj = JSON.stringify(response.data);
+               let resData = JSON.parse(resObj).data;
+
+               localStorage.setItem('history_data' , resData);
+               window.location.href = '/showhistory';
+                
             })
             .catch(function (error) {
                 console.log(error);

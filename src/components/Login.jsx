@@ -43,7 +43,7 @@ export default function Login() {
                 
                 let resObj =JSON.stringify(response.data);
                 let dataObj = JSON.parse(resObj).data;
-                console.log(dataObj.jwtToken);
+                // console.log(dataObj.jwtToken);
                 window.location.href = '/main';
                 localStorage.setItem('jwt',dataObj.jwtToken);
                 
